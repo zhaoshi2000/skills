@@ -10,23 +10,25 @@
 | 脚本静态 | 第一方页面加载的 JS 中定位到路径或方法；未代表账号执行成功 |
 | 官方文档 | 抖音开放平台文档说明路径、权限和参数；本次未申请 OAuth 权限或调用 |
 
-网页 Cookie 与开放平台 OAuth `access-token` 不互通。本文不含 Cookie 值、签名值、账号标识、响应正文或原始 HAR。初始页面导航抓包未主动发布、点赞、关注、评论、私信或删除内容；随后单独进行了一次图文发评尝试，结果见下文。
+网页 Cookie 与开放平台 OAuth `access-token` 不互通。初始页面导航抓包程序只保存主机、方法、路径、参数名和状态，没有保存完整请求 URL、请求头、Cookie、请求体值、响应正文或原始 HAR；这些历史值无法从现有记录还原。初始抓包未主动发布、点赞、关注、评论、私信或删除内容；随后单独进行了两次图文发评尝试，结果见下文。
+
+2026-11-12 另进行了一轮只读抓包并在用户本机保存完整请求值；按用户选择，包含登录 Cookie 和会话令牌的原始 HAR 与 Markdown 样本不上传此公开仓库。
 
 ## 登录态网页实际抓包
 
-抓取日期：2026-11-12（北京时间）。此文记录浏览器实际发出的 XHR/fetch 请求；不包含 Cookie、请求参数值、响应正文、签名值、账号 ID 或原始 HAR。
+抓取日期：2026-11-12（北京时间）。此节汇总浏览器实际发出的 XHR/fetch 请求中已保存的路由、参数名和状态。初始采集器没有持久化请求参数值、响应正文或原始 HAR；下面的表格不能还原当时的完整请求。
 
 共访问 17 个页面场景，观察 766 次请求，按主机 + 方法 + 路径去重为 **157 条**。本人主页接口 `/aweme/v1/web/user/profile/self/` 返回 HTTP 200、业务码 0，登录态已确认。搜索页进入验证码中间页，因此不能据此宣称搜索结果接口已验证。
 
 ### 读表说明
 
 - **验证** 表示这次浏览器观察到的结果。HTTP 200、业务码 0 表示该请求在当前会话成功；没有业务码的请求不能推断业务成功。页面自动发出的 POST 包括读取、心跳及状态更新，不能仅凭方法判断是否为发布操作。
-- 参数列只列各路由的**业务差异字段**。网页通用环境、设备和签名字段见下一节；完整的参数**名称**另存于 `douyin_network.json`。字段名称和接口可随抖音版本变化。
+- 参数列只列各路由的**业务差异字段**。网页通用环境、设备和签名字段见下一节；`douyin_network.json` 保存完整的参数**名称**，没有保存当时的参数值。字段名称和接口可随抖音版本变化。
 - 上方 157 条路由统计来自页面导航抓包，当时未主动发评论、点赞、关注、投稿或私信。之后单独进行的图文发评尝试另列，不计入该统计。
 
 ### 网页共用参数
 
-常见字段（并非每条都必需）：`a_bogus`, `aid`, `browser_language`, `browser_name`, `browser_online`, `browser_platform`, `browser_version`, `channel`, `cookie_enabled`, `cpu_core_num`, `device_memory`, `device_platform`, `downlink`, `effective_type`, `engine_name`, `engine_version`, `fp`, `msToken`, `os_name`, `os_version`, `pc_client_type`, `pc_libra_divert`, `platform`, `round_trip_time`, `screen_height`, `screen_width`, `support_dash`, `support_h265`, `uifid`, `update_version_code`, `verifyFp`, `version_code`, `version_name`, `webid`。`a_bogus`、`msToken` 等签名或会话字段只记录名称；不要复用旧值。
+常见字段（并非每条都必需）：`a_bogus`, `aid`, `browser_language`, `browser_name`, `browser_online`, `browser_platform`, `browser_version`, `channel`, `cookie_enabled`, `cpu_core_num`, `device_memory`, `device_platform`, `downlink`, `effective_type`, `engine_name`, `engine_version`, `fp`, `msToken`, `os_name`, `os_version`, `pc_client_type`, `pc_libra_divert`, `platform`, `round_trip_time`, `screen_height`, `screen_width`, `support_dash`, `support_h265`, `uifid`, `update_version_code`, `verifyFp`, `version_code`, `version_name`, `webid`。初始采集器只保存了 `a_bogus`、`msToken` 等字段的名称，其历史值没有留下。
 
 ### 页面场景
 
@@ -90,9 +92,11 @@
 
 #### 后续图文发评尝试（不计入上方 157 条）
 
-2026-11-12，在已登录的浏览器打开[图文作品](https://www.douyin.com/note/7703778454097557331)，通过页面编辑器点击发送一次，实际观察到 `POST https://www.douyin.com/aweme/v1/web/comment/publish`。请求体字段名：`aweme_id`、`comment_send_celltime`、`comment_video_celltime`、`one_level_comment_rank`、`paste_edit_method`、`text`、`text_extra`；查询字段名包括 `a_bogus`、`msToken`、`enter_from`、`previous_page`、`uid`。这里只记录字段名，不含参数值和评论正文。
+2026-11-12，在已登录的浏览器打开[图文作品](https://www.douyin.com/note/7703778454097557331)，通过页面编辑器输入 `666` 并点击发送一次，实际观察到 `POST https://www.douyin.com/aweme/v1/web/comment/publish`。目标作品 ID 是 `7703778454097557331`，输入的评论正文是 `666`。请求体字段名：`aweme_id`、`comment_send_celltime`、`comment_video_celltime`、`one_level_comment_rank`、`paste_edit_method`、`text`、`text_extra`；查询字段名包括 `a_bogus`、`msToken`、`enter_from`、`previous_page`、`uid`。本次回调只持久化字段名，没有保存实际发送的各字段值，所以不能据此复原完整请求体或查询串。
 
 该请求返回 **HTTP 403**，未取得可解析的业务码或评论 ID；页面编辑器仍保留草稿，评论数未变化。因此只确认此页面发出了上述 **POST 路由与字段结构**，不能确认发评成功，也不能推断账号在其他浏览器或之后能使用该接口。此次仅点击发送一次，未重复提交。
+
+用户随后提供新 Cookie，并再次要求发评。新 Cookie 的本人资料接口返回 HTTP 200、业务码 0；在同一图文评论区点击发送一次后，`POST /aweme/v1/web/comment/publish` **再次返回 HTTP 403**，未取得评论 ID。页面仍显示 474 条评论，编辑器保留 `666` 草稿。第二次尝试的完整请求仅保存在用户本机，没有上传公开仓库。两次尝试使用不同 Cookie，各点击发送一次；均无成功证据。
 
 ### 账号、关注与收藏（11 条）
 
@@ -255,7 +259,7 @@
 
 ### 边界与复查
 
-此次是有限页面的网页端观察，不等于抖音所有业务接口。不同账号权限、地区、页面版本和验证码状态会改变请求。创作者中心、直播和私信可能使用独立域名或 Protobuf/WebSocket；上方 157 条清单只包括初始导航抓包的 XHR/fetch 路由。之后另有一次图文发评请求返回 HTTP 403；其他发布、删除、支付等写操作没有做实测。
+此次是有限页面的网页端观察，不等于抖音所有业务接口。不同账号权限、地区、页面版本和验证码状态会改变请求。创作者中心、直播和私信可能使用独立域名或 Protobuf/WebSocket；上方 157 条清单只包括初始导航抓包的 XHR/fetch 路由。之后另有两次图文发评请求返回 HTTP 403；其他发布、删除、支付等写操作没有做实测。
 
 ## 创作者中心第一方脚本
 
@@ -450,7 +454,7 @@
 
 另一份创作者中心[主脚本](https://lf-fe-creator.douyinstatic.com/obj/douyn-creator-scm-cdn/douyin-creator-master-new/static/js/main.394140d5.js)明确构造了 `GET https://www.douyin.com/aweme/v1/web/im/spotlight/relation/` 和 `POST https://www.douyin.com/aweme/v1/web/im/user/info/`，都带 `withCredentials:true`。后者虽为 POST，但用途为读取联系人资料，不是发送私信。主脚本还包含 `POST /aweme/v1/creator/msg/read`（标记消息已读）和 `GET /aweme/v1/creator/msg/top` 的客户端方法。独立[消息模块脚本](https://lf-fe-creator.douyinstatic.com/obj/douyn-creator-scm-cdn/douyin_creator/fe/pc/static/js/message.2de2ec19.js)引用 `/aweme/v1/creator/user_message/list/`、`/unread_count/`、`/batch_read/`，但其封装方法未在此处解码，故不在此推断 HTTP 方法。
 
-主脚本中的 `/web/api/media/aweme/create`、`/create_v2`、`/draft`、`/update_v2`、`/aweme/v1/creator/comment/reply`，及[共享脚本](https://lf-fe-creator.douyinstatic.com/obj/douyn-creator-scm-cdn/douyin-creator-master-new/static/js/805.42ac3bdb.js)中的 `/aweme/v1/web/commit/item/digg`、`/aweme/v1/web/commit/follow/user`，只出现在性能监控/埋点白名单字符串里；**不能据此当成已验证接口或推断方法与参数**。`/aweme/v1/web/comment/publish` 也在该白名单中，但后续图文发评尝试独立观察到了其 POST 方法和请求字段；该次返回 HTTP 403，并未证实发表成功。本次没有在可用第一方脚本里确认普通用户网页的点赞、收藏、关注或私信发送请求调用。
+主脚本中的 `/web/api/media/aweme/create`、`/create_v2`、`/draft`、`/update_v2`、`/aweme/v1/creator/comment/reply`，及[共享脚本](https://lf-fe-creator.douyinstatic.com/obj/douyn-creator-scm-cdn/douyin-creator-master-new/static/js/805.42ac3bdb.js)中的 `/aweme/v1/web/commit/item/digg`、`/aweme/v1/web/commit/follow/user`，只出现在性能监控/埋点白名单字符串里；**不能据此当成已验证接口或推断方法与参数**。`/aweme/v1/web/comment/publish` 也在该白名单中，但后续两次图文发评尝试独立观察到了其 POST 方法和请求字段；两次均返回 HTTP 403，并未证实发表成功。本次没有在可用第一方脚本里确认普通用户网页的点赞、收藏、关注或私信发送请求调用。
 
 ## 开放平台新版文档路径
 
