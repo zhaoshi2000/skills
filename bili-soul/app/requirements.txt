@@ -1,0 +1,6 @@
+playwright>=1.48
+yt-dlp>=2025.1.15
+openai>=1.60
+python-dotenv>=1.0
+rich>=13.9
+faster-whisper>=1.1

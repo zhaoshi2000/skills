@@ -1,0 +1,3 @@
+interface:
+  display_name: "BiliSoul"
+  short_description: "Analyze Bilibili videos and make local drafts or notes"

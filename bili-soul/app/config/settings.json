@@ -1,0 +1,8 @@
+{
+  "headless": false,
+  "max_videos_per_run": 3,
+  "feed_limit": 30,
+  "download_dir": "downloads",
+  "database": "data/bilisoul.sqlite3",
+  "interaction_mode": "draft_only"
+}

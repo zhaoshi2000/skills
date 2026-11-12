@@ -1,5 +1,17 @@
 # Skills
 
+每个根目录对应一个可独立安装的 Codex skill。复制所需目录到 Codex 的 `skills` 目录，然后重新加载技能。下列程序的运行配置和账号会话只保存在本机。
+
+## bili-soul
+
+[bili-soul](bili-soul/) 包含 BiliSoul 图形界面与命令行程序、视频笔记工具、B 站接口目录和对应的 `SKILL.md`。它读取视频字幕与公开评论，生成视频分析和待审核评论草稿。窗口可观察进度并启动、暂停、停止任务。主程序不自动执行账号互动。
+
+需要 Python 3.10+；Windows 下进入 [app](bili-soul/app/) 后双击 `启动-Windows.bat` 初始化，再双击 `启动图形界面.bat`。首次运行按 [程序说明](bili-soul/app/README.md) 配置自己的模型接口与 B 站登录态。视频笔记发布是 [独立命令](bili-soul/app/video_note.py) 的显式操作。
+
+## video-mindmap-note
+
+[video-mindmap-note](video-mindmap-note/) 把带时间戳的字幕整理成笔记和思维导图大纲，并用附带脚本生成 SVG/PNG。可与 BiliSoul 的字幕和视频笔记流程配合使用，也可单独安装。
+
 ## douyin-snapany-download
 
 识别抖音与 B 站视频链接（包括 `v.douyin.com`、`bilibili.com` 和 `b23.tv`），通过 SnapAny 当前公开网页接口解析并下载公开视频。支持包含多个链接的分享文案。

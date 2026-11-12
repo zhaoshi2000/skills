@@ -1,0 +1,3 @@
+interface:
+  display_name: "Video Mind Map Notes"
+  short_description: "Create timestamped notes and a mind map from subtitles"
