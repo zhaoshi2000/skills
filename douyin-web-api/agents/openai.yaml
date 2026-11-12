@@ -1,0 +1,4 @@
+interface:
+  display_name: "抖音网页接口目录"
+  short_description: "核查抖音网页请求与官方开放平台接口"
+  default_prompt: "Use $douyin-web-api to inspect the documented Douyin routes for this feature and verify their current status."

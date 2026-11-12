@@ -12,6 +12,10 @@
 
 [video-mindmap-note](video-mindmap-note/) 把带时间戳的字幕整理成笔记和思维导图大纲，并用附带脚本生成 SVG/PNG。可与 BiliSoul 的字幕和视频笔记流程配合使用，也可单独安装。
 
+## douyin-web-api
+
+[douyin-web-api](douyin-web-api/) 收录抖音网页登录态抓包、创作者中心第一方脚本定位的接口及官方开放平台 OpenAPI。目录区分实际请求、脚本静态确认和官方文档，并附可重复运行的脱敏抓包脚本。网页登录 Cookie 只在本机使用，不包含在仓库中。
+
 ## douyin-snapany-download
 
 识别抖音与 B 站视频链接（包括 `v.douyin.com`、`bilibili.com` 和 `b23.tv`），通过 SnapAny 当前公开网页接口解析并下载公开视频。支持包含多个链接的分享文案。

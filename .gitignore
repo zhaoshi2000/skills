@@ -12,3 +12,8 @@ downloads/
 *.mp3
 *.mp4
 *.wav
+*.har
+**/*cookie*.json
+**/cookies.txt
+**/douyin_network.json
+**/douyin_pages.json
