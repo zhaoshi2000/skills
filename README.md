@@ -12,6 +12,12 @@
 
 [video-mindmap-note](video-mindmap-note/) 把带时间戳的字幕整理成笔记和思维导图大纲，并用附带脚本生成 SVG/PNG。可与 BiliSoul 的字幕和视频笔记流程配合使用，也可单独安装。
 
+## comfyui-api-video
+
+[comfyui-api-video](comfyui-api-video/) 指导 AI 通过指定 ComfyUI 服务器的 HTTP API，用角色、场景等参考素材生成分镜视频，按任务 ID 监控并下载成片。包含可直接调用的标准库命令工具和一份已验证的 H3 链路参考；运行时仍需核对当前服务器的节点、模型与队列。
+
+复制该目录到 Codex 的 `skills` 目录并重新加载。提供 ComfyUI 地址、参考素材、剧情和画幅要求后，可让 AI 使用 `$comfyui-api-video` 执行。工具接受已准备好的 API 格式工作流 JSON；不会自动重交超时任务，也不会生成或保存 API 密钥。
+
 ## douyin-web-api
 
 [douyin-web-api](douyin-web-api/) 收录抖音网页登录态抓包、创作者中心第一方脚本定位的接口及官方开放平台 OpenAPI。目录区分实际请求、脚本静态确认和官方文档，并附可重复运行的脱敏抓包脚本。网页登录 Cookie 只在本机使用，不包含在仓库中。
@@ -37,3 +43,4 @@ python scripts/download_douyin.py "https://v.douyin.com/..." --output-dir ./down
 ```
 
 下载文件默认保存到当前用户的 Downloads 目录。只处理可公开访问的视频；站点验证、额度限制或接口变化会导致下载失败。
+
